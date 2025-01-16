@@ -75,3 +75,9 @@ const router = createBrowserRouter([
 
 
 export default router
+
+// 路由常用常量
+export const HOME = "/"
+export const LOGIN = "/login"
+export const REGISTER = "/register"
+export const MANAGE_INDEX = "/manage/list"
