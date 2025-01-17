@@ -1,13 +1,85 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import styles from './Login.module.scss'
+import { UserAddOutlined } from '@ant-design/icons'
+import { Space, Form, Input, Button, Checkbox } from 'antd'
+import { Typography } from 'antd'
+import { Link } from 'react-router-dom'
+import { REGISTER } from '../router/index'
+const { Title } = Typography
+
+function setUserInfo(userName: string, password: string) {
+  localStorage.setItem('userName', userName)
+  localStorage.setItem('password', password)
+}
+
+function getUserInfo() {
+  return {
+    userName: localStorage.getItem('userName'),
+    password: localStorage.getItem('password')
+  }
+}
+
+function deleteUserInfo() {
+  localStorage.removeItem('userName')
+  localStorage.removeItem('password')
+}
 
 
 const Login: FC = () => {
-  const navigate = useNavigate()
+  // form表单的useForm
+  const [form] = Form.useForm()
+  // 获取userInfo
+  useEffect(()=>{
+    const {userName, password} = getUserInfo()
+    form.setFieldsValue({
+      userName,
+      password
+    })
+  },[])
+  // 提交表单
+  const onfinish = (values: any) => {
+    console.log(values)
+    if(values.remember) {
+      setUserInfo(values.userName, values.password)
+    } else {
+      deleteUserInfo()
+    }
+  }
   return (
     <>
-      <div >
-        Login
+      <div className={styles.continer}>
+        <div>
+          <Space>
+            <Title level={2}><UserAddOutlined></UserAddOutlined></Title>
+            <Title level={2}>登陆</Title>
+          </Space>
+        </div>
+        <div>
+          <Form
+            labelCol={{ span: 6 }}
+            wrapperCol={{ span: 14 }}
+            onFinish={onfinish}
+            initialValues={{remember: true}}
+            form={form}
+          >
+            <Form.Item label="用户名" name="userName">
+              <Input></Input>
+            </Form.Item>
+            <Form.Item label="密码" name="password"  >
+              <Input.Password ></Input.Password>
+            </Form.Item>  
+            <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 6, span: 16 }}>
+              <Checkbox>记住我</Checkbox>
+            </Form.Item>           
+            <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
+              <Button type='primary' htmlType='submit'>登陆</Button>
+            </Form.Item>
+            <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
+              <Link to={REGISTER}>没有账户？请注册</Link>
+            </Form.Item>
+          </Form>
+        </div>
       </div>
     </>
   )
