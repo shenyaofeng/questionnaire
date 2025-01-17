@@ -3,6 +3,7 @@ import styles from "./common.module.scss"
 import { useState } from 'react'
 import QuestionCard from '../../components/QuestionCard'
 import { Typography,Empty } from 'antd'
+import ListSearch from '../../components/ListSearch'
 const rawQuestionList = [
   { _id: 'q1', title: '问卷1', isPublished: false, isStar: true, answerCount: 5, createAt: '2022-01-01' },
   { _id: 'q2', title: '问卷2', isPublished: true, isStar: true, answerCount: 3, createAt: '2022-012-01' },
@@ -18,7 +19,7 @@ const [questionList, setQuestionList] = useState(rawQuestionList)
         <div className={styles.left}>
           <Title level={3}>星标问卷</Title>
         </div>
-        <div className={styles.right}>搜索</div>
+        <div className={styles.right}><ListSearch></ListSearch></div>
       </div>
       <div className='content' style={{ backgroundColor: '#f1f1f1' }}>
         {/* 问卷列表 */}
