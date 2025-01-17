@@ -68,16 +68,16 @@ const QuestionList: FC<PropsType> = (props: PropsType) => {
                 title="是否复制该问卷"
                 onConfirm={copy}
                 onCancel={() => { message.error('取消复制')}}
-                okText="Yes"
-                cancelText="No">
+                okText="是"
+                cancelText="否">
                 <Button type='text' icon={<CopyOutlined></CopyOutlined>} >复制</Button>
               </Popconfirm>
               <Popconfirm
                 title="是否复制该问卷"
                 onConfirm={del}
                 onCancel={() => { message.error('取消删除') }}
-                okText="Yes"
-                cancelText="No">
+                okText="是"
+                cancelText="否">
                 <Button type='text' icon={<DeleteOutlined></DeleteOutlined>}>删除</Button></Popconfirm>
             </Space>
           </div>
