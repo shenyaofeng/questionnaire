@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import styles from "./QuestionCard.module.scss"
-import { Button, Space, Divider,Tag } from 'antd'
+import { Button, Space, Divider, Tag, Popconfirm, message } from 'antd'
 import { EditOutlined, LineChartOutlined, StarOutlined, CopyOutlined, DeleteOutlined } from '@ant-design/icons'
 import { useNavigate, Link } from 'react-router-dom'
 type PropsType = {
@@ -15,6 +15,12 @@ type PropsType = {
 const QuestionList: FC<PropsType> = (props: PropsType) => {
   const { _id, title, isPublished, answerCount, createAt, isStar } = props
   const navigate = useNavigate()
+  const copy = () => {
+    message.success('复制成功');
+  }
+  const del = () => {
+    message.success('删除成功');
+  }
   return (
     <>
       {/* <div key={_id} className="list-item">
@@ -32,7 +38,7 @@ const QuestionList: FC<PropsType> = (props: PropsType) => {
           <div className={styles.left}>
             <Link to={isPublished ? '/question/stat/${_id}' : '/question/edit/${_id}'}>
               <Space>
-                {isStar && <StarOutlined style={{ color: 'red' }}/>}
+                {isStar && <StarOutlined style={{ color: 'red' }} />}
                 {title}
               </Space>
             </Link>
@@ -43,7 +49,7 @@ const QuestionList: FC<PropsType> = (props: PropsType) => {
               <span>答卷:{answerCount}</span>
               <span>{createAt}</span>
             </Space>
-            
+
           </div>
         </div>
         <Divider></Divider>
@@ -58,8 +64,21 @@ const QuestionList: FC<PropsType> = (props: PropsType) => {
           <div className={styles.right}>
             <Space>
               <Button type='text' icon={<StarOutlined></StarOutlined>}>{isStar ? '取消标星' : '标星'}</Button>
-              <Button type='text' icon={<CopyOutlined></CopyOutlined>} >复制</Button>
-              <Button type='text' icon={<DeleteOutlined></DeleteOutlined>}>删除</Button>
+              <Popconfirm
+                title="是否复制该问卷"
+                onConfirm={copy}
+                onCancel={() => { message.error('取消复制')}}
+                okText="Yes"
+                cancelText="No">
+                <Button type='text' icon={<CopyOutlined></CopyOutlined>} >复制</Button>
+              </Popconfirm>
+              <Popconfirm
+                title="是否复制该问卷"
+                onConfirm={del}
+                onCancel={() => { message.error('取消删除') }}
+                okText="Yes"
+                cancelText="No">
+                <Button type='text' icon={<DeleteOutlined></DeleteOutlined>}>删除</Button></Popconfirm>
             </Space>
           </div>
         </div>
