@@ -63,10 +63,13 @@ const Login: FC = () => {
             initialValues={{remember: true}}
             form={form}
           >
-            <Form.Item label="用户名" name="userName">
+            <Form.Item label="用户名" name="userName" rules={[
+              { required: true, message: '请输入用户名' },
+              { type: 'string', min: 4, max: 10, message: '用户名长度为4-10位' },
+              { pattern: /^[a-zA-Z0-9_]*$/, message: '用户名只能是字母、数字、下划线' }]}>
               <Input></Input>
             </Form.Item>
-            <Form.Item label="密码" name="password"  >
+            <Form.Item label="密码" name="password" rules={[{ required: true, message: '请输入密码' }]} >
               <Input.Password ></Input.Password>
             </Form.Item>  
             <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 6, span: 16 }}>
