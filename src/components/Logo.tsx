@@ -1,12 +1,12 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import {Space,Typography} from 'antd'
 import { FormOutlined } from '@ant-design/icons'
-import './Logo.scss'
+import styles from './Logo.module.scss'
 import {Link} from 'react-router-dom'
 const { Title } = Typography;
 const Logo:FC = () => {
   return (
-    <div className = 'continer'>
+    <div className={styles.continer}>
       <Link to={'/'}>
         <Space >
           <Title>
