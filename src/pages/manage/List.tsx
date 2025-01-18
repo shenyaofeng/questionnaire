@@ -1,21 +1,15 @@
 import { FC } from 'react'
+import { Typography,Spin } from 'antd'
 import styles from "./common.module.scss"
-import { useState } from 'react'
 import QuestionCard from '../../components/QuestionCard'
-import { Typography } from 'antd'
 import ListSearch from '../../components/ListSearch'
-const rawQuestionList = [
-  { _id: 'q1', title: '问卷1', isPublished: false, isStar: true, answerCount: 5, createAt: '2022-01-01' },
-  { _id: 'q2', title: '问卷2', isPublished: true, isStar: true, answerCount: 3, createAt: '2022-012-01' },
-  { _id: 'q3', title: '问卷3', isPublished: false, isStar: false, answerCount: 2, createAt: '2022-013-01' },
-  { _id: 'q4', title: '问卷4', isPublished: false, isStar: false, answerCount: 1, createAt: '2022-014-01' }
-]
+import { getQuestionListAPI } from '../../services/question'
+import { useRequest } from 'ahooks'
 const { Title } = Typography
 
 const List: FC = () => {
-  const [questionList, setQuestionList] = useState(rawQuestionList)
-
-
+  const { data, loading } = useRequest(getQuestionListAPI)
+  const questionList = data?.data.list || [];
   return (
     <>
       <div className={styles.header}>
@@ -27,9 +21,10 @@ const List: FC = () => {
         </div>
       </div>
       <div className='content' style={{backgroundColor:'#f1f1f1'}}>
+        {loading && <div style={{textAlign:'center'}}><Spin></Spin></div>}
         {/* 问卷列表 */}
-        {questionList.length>0 &&
-         questionList.map((item) => {
+        {(!loading && questionList.length) > 0 &&
+         questionList.map((item:any) => {
           const { _id } = item
           return <QuestionCard key={_id} {...item} ></QuestionCard>
         })}

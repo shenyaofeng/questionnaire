@@ -9,10 +9,10 @@ export function getQuestionAPI(id: string) {
     url: `/api/question/${id}`,
   });
 }
-// 创建问卷
+// 
 export function createQuestionAPI() {
   return instance.request({
-    url: `/api/question/`,
+    url: '/api/question/',
     method: "post",
   });
 }
@@ -20,7 +20,7 @@ export function createQuestionAPI() {
 // 获取问卷列表
 export function getQuestionListAPI() {
   return instance.request({
-    url: `/api/einoqstu`,
+    url: '/api/question',
     method: "get",
   });
 }
