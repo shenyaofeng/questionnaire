@@ -1,9 +1,8 @@
-import React, { FC, useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Typography } from 'antd'
 import { MANAGE_INDEX } from '../router'
 import styles from './Home.module.scss'
-import axios from 'axios'
 import { getQuestionAPI } from "../services/question"
 const {Title,Paragraph} = Typography
 const Home: FC = () => {

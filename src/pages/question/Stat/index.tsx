@@ -1,15 +1,13 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 
-
+import useLoadQuestionData from "../../../Hooks/useLoadQuestionData"
 
 const Stat: FC = () => {
-
+  const { loading, questionData } = useLoadQuestionData()
   return (
-    <>
-      <div >
-        Stat
-      </div>
-    </>
+    <div>
+      {loading ? <p>loading</p> : <p>{JSON.stringify(questionData)}</p>}
+    </div>
   )
 }
 

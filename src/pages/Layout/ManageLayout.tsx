@@ -1,22 +1,30 @@
-import { FC } from 'react'
+import { FC,useState } from 'react'
 import { Outlet,useNavigate ,useLocation} from 'react-router-dom'
 import styles from './ManageLayout.module.scss'
-import { Button,Space,Divider } from 'antd'
+import { Button,Space,Divider, message } from 'antd'
 import { PlusOutlined,BarsOutlined,StarOutlined ,DeleteOutlined} from '@ant-design/icons'
 import { createQuestionAPI } from "../../services/question"
-import { useState } from 'react'
+import { useRequest } from 'ahooks'
 const ManageLayout: FC = () => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   // 控制创建问卷按钮的loading状态不能连续点击
-  const [loading, setLoading] = useState<boolean>(false)
-  // 创建问卷
-  const createQuestion = async () =>{ 
-    setLoading(true)
-    const res = await createQuestionAPI()
-    navigate(`/question/edit/${res.data.id}`)
-    setLoading(false)
-  }
+  // const [loading, setLoading] = useState<boolean>(false)
+  // // 创建问卷
+  // const createQuestion = async () =>{ 
+  //   setLoading(true)
+  //   const res = await createQuestionAPI()
+  //   navigate(`/question/edit/${res.data.id}`)
+  //   setLoading(false)
+  // }
+
+  const { loading, run: createQuestion } = useRequest(createQuestionAPI,{
+    manual:true,
+    onSuccess:(res) => {
+      navigate(`/question/edit/${res.data.id}`)
+      message.success('创建成功')
+    }
+  })
   return (
     <>
     {/* 我的问卷中间布局 */}

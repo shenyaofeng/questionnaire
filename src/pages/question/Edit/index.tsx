@@ -1,4 +1,4 @@
-import React, { FC,  } from 'react'
+import { FC,  } from 'react'
 import  useLoadQuestionData  from "../../../Hooks/useLoadQuestionData"
 const Edit: FC = () => {
   const { loading, questionData } = useLoadQuestionData()

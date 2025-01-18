@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import styles from "./common.module.scss"
 import { useState } from 'react'
 import QuestionCard from '../../components/QuestionCard'
