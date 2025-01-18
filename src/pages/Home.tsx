@@ -1,11 +1,20 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Typography } from 'antd'
 import { MANAGE_INDEX } from '../router'
 import styles from './Home.module.scss'
+import axios from 'axios'
+import { fetchListAPI } from "../services/question"
 const {Title,Paragraph} = Typography
 const Home: FC = () => {
   const navigate = useNavigate()
+  useEffect(() => {
+    async function  gettest (){
+      const res = await fetchListAPI('1')
+      console.log(res)
+    }
+    gettest()
+  },[])
   return (
     <>
       <div className={styles.continer}>
