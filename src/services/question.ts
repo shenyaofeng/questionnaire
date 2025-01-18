@@ -4,12 +4,21 @@ import instance from "./ajax";
 //   size: number;
 // };
 // 获取单个问卷
+
+// type SearchOption = {
+//   keyword: string;
+//   isSatr?: boolean;
+//   isDeleted?: boolean;
+// }
+
+
+
 export function getQuestionAPI(id: string) {
   return instance.request({
     url: `/api/question/${id}`,
   });
 }
-// 
+// 创建问卷
 export function createQuestionAPI() {
   return instance.request({
     url: '/api/question/',
