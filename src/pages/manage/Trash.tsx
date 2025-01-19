@@ -1,14 +1,10 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import styles from "./common.module.scss"
 import { useState } from 'react'
 import { Typography, Empty, Table, Tag,Space, Button,Popconfirm } from 'antd'
 import ListSearch from '../../components/ListSearch'
-const rawQuestionList = [
-  { _id: 'q1', title: '问卷1', isPublished: false, isStar: true, answerCount: 5, createAt: '2022-01-01' },
-  { _id: 'q2', title: '问卷2', isPublished: true, isStar: true, answerCount: 3, createAt: '2022-012-01' },
-  { _id: 'q3', title: '问卷3', isPublished: false, isStar: false, answerCount: 2, createAt: '2022-013-01' },
-  { _id: 'q4', title: '问卷4', isPublished: false, isStar: false, answerCount: 1, createAt: '2022-014-01' }
-]
+import { Spin } from 'antd'
+import useLoadQuestionListData from "../../Hooks/useLoadQuestionListData"
 
 // 表格标题
 const columns = [
@@ -37,7 +33,8 @@ const columns = [
 const { Title } = Typography
 const Trash: FC = () => {
   //列表
-  const [questionList, setQuestionList] = useState(rawQuestionList)
+  const { data, loading } = useLoadQuestionListData({isDeleted:true})
+  const questionList = data?.data.list || [];
   // 选中的
   const [selectIds, setSelectIds] = useState<string[]>([])
 
@@ -66,7 +63,7 @@ const Trash: FC = () => {
           onChange: (selectedRowKeys) => {
             setSelectIds(selectedRowKeys as string[])
           },
-        }} dataSource={rawQuestionList} columns={columns} pagination={false} rowKey={"_id"} />
+        }} dataSource={questionList} columns={columns} pagination={false} rowKey={"_id"} />
     </>
   )
 
@@ -81,6 +78,7 @@ const Trash: FC = () => {
       </div>
       <div className='content' style={{ backgroundColor: '#f1f1f1' }}>
         {/* 问卷列表 */}
+        {loading && <div style={{ textAlign: 'center' }}><Spin></Spin></div>}
         {questionList.length === 0 ? <Empty></Empty> : TableElement
         }
       </div>

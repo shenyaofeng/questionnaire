@@ -7,6 +7,8 @@ import instance from "./ajax";
 
 type SearchOption = {
   keyword: string;
+  isStar: boolean;
+  isDeleted: boolean;
 }
 
 

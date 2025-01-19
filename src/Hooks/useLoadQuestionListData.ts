@@ -2,12 +2,19 @@ import { useRequest } from "ahooks";
 import { useSearchParams } from "react-router-dom";
 import {getQuestionListAPI} from "../services/question"
 
-function useLoadQuestionListData() {
+type OptionType = {
+  isStar: boolean;
+  isDeleted: boolean;
+}
+
+function useLoadQuestionListData(opt: Partial<OptionType> = {}) {
+  const { isStar, isDeleted } = opt;
+
   const [searchParams] = useSearchParams();
   
   const   getQuestionList = async () => {
     const keyword = searchParams.get("keyword") || ""
-    const res = await getQuestionListAPI({ keyword });
+    const res = await getQuestionListAPI({ keyword, isStar, isDeleted });
     return res
   }
 
