@@ -3,12 +3,11 @@ import { Typography,Spin } from 'antd'
 import styles from "./common.module.scss"
 import QuestionCard from '../../components/QuestionCard'
 import ListSearch from '../../components/ListSearch'
-import { getQuestionListAPI } from '../../services/question'
-import { useRequest } from 'ahooks'
+import useLoadQuestionListData from '../../Hooks/useLoadQuestionListData'
 const { Title } = Typography
 
 const List: FC = () => {
-  const { data, loading } = useRequest(getQuestionListAPI)
+  const { data, loading } = useLoadQuestionListData()
   const questionList = data?.data.list || [];
   return (
     <>

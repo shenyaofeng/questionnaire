@@ -5,11 +5,9 @@ import instance from "./ajax";
 // };
 // 获取单个问卷
 
-// type SearchOption = {
-//   keyword: string;
-//   isSatr?: boolean;
-//   isDeleted?: boolean;
-// }
+type SearchOption = {
+  keyword: string;
+}
 
 
 
@@ -26,10 +24,11 @@ export function createQuestionAPI() {
   });
 }
 ;
-// 获取问卷列表
-export function getQuestionListAPI() {
+// 获取问卷列表(或搜索)
+export function getQuestionListAPI(opt:Partial<SearchOption> = {}) {
   return instance.request({
     url: '/api/question',
     method: "get",
+    params: opt
   });
 }

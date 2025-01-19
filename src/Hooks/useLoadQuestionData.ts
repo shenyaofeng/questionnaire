@@ -2,22 +2,8 @@ import { useParams } from "react-router-dom";
 import { getQuestionAPI } from "../services/question";
 import { useRequest } from "ahooks";
 function useLoadQuestionData(){
+  // 编辑问卷和数据统计页面需要根据id获取问卷数据
   const { id = "" } = useParams();
-  // const [loading, setLoading] = useState<boolean>(false);
-  // const [questionData, setQuestion] = useState({});
-  // useEffect(() => {
-  //   const getQuestion = async () => {
-  //     const res = await getQuestionAPI(id);
-  //     setQuestion(res.data);
-  //     setLoading(false);
-  //   };
-  //   getQuestion();
-  // }, []);
-
-  // return {
-  //   loading,
-  //   questionData,
-  // };
   // 定义请求的load函数
   const load = async () => {
     const res = await getQuestionAPI(id);
