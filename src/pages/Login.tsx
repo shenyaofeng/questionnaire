@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
 import { REGISTER } from '../router/index'
 import { userLoginAPI } from '../services/user'
 import { useRequest } from 'ahooks'
+import { setToken } from '../utils/user-token'
 const { Title } = Typography
 interface LoginValues {
   userName: string;
@@ -62,7 +63,10 @@ const Login: FC = () => {
     return data
   },{
     manual:true,
-    onSuccess: () => {
+    onSuccess: (result) => {
+      //存储token
+      const { token = '' } = result.data
+      setToken(token)
       message.success('登陆成功')
       navigate('/manage/list')
     }

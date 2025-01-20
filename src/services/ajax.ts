@@ -1,5 +1,6 @@
 import axios from "axios";
 import { message } from "antd";
+import { getToken } from "../utils/user-token";
 const instance = axios.create({
   baseURL:'http://localhost:3000/',
   timeout:5000
@@ -9,6 +10,10 @@ const instance = axios.create({
 instance.interceptors.request.use(
   function (config) {
     // 在发送请求之前做些什么
+    const token = getToken();
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
     return config;
   },
   function (error) {
