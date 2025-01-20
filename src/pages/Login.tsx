@@ -1,13 +1,19 @@
-import React, { FC, useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './Login.module.scss'
 import { UserAddOutlined } from '@ant-design/icons'
-import { Space, Form, Input, Button, Checkbox } from 'antd'
+import { Space, Form, Input, Button, Checkbox, message } from 'antd'
 import { Typography } from 'antd'
 import { Link } from 'react-router-dom'
 import { REGISTER } from '../router/index'
+import { userLoginAPI } from '../services/user'
+import { useRequest } from 'ahooks'
 const { Title } = Typography
-
+interface LoginValues {
+  userName: string;
+  password: string;
+  remember: boolean;
+}
 function setUserInfo(userName: string, password: string) {
   localStorage.setItem('userName', userName)
   localStorage.setItem('password', password)
@@ -27,6 +33,8 @@ function deleteUserInfo() {
 
 
 const Login: FC = () => {
+  //
+  const navigate = useNavigate()
   // form表单的useForm
   const [form] = Form.useForm()
   // 获取userInfo
@@ -38,14 +46,27 @@ const Login: FC = () => {
     })
   },[])
   // 提交表单
-  const onfinish = (values: any) => {
+  const onfinish = (values: LoginValues) => {
     console.log(values)
+    run(values)
     if(values.remember) {
       setUserInfo(values.userName, values.password)
     } else {
       deleteUserInfo()
     }
   }
+
+  const { run } = useRequest(async values => {
+    const {userName,password } = values
+    const data = await userLoginAPI(userName, password)
+    return data
+  },{
+    manual:true,
+    onSuccess: () => {
+      message.success('登陆成功')
+      navigate('/manage/list')
+    }
+  })
   return (
     <>
       <div className={styles.continer}>

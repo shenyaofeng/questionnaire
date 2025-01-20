@@ -1,14 +1,41 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import styles from "./Register.module.scss"
 import { UserAddOutlined } from '@ant-design/icons'
-import { Space, Form, Input, Button } from 'antd'
+import { Space, Form, Input, Button, message } from 'antd'
 import { Typography } from 'antd'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { LOGIN } from '../router/index'
+import { useRequest } from 'ahooks'
+import { userRegisterAPI } from '../services/user'
 const { Title } = Typography
+
+// 定义一个接口来描述 values 的结构
+interface RegisterValues {
+  userName: string;
+  password: string;
+  nickName: string;
+}
+
 const Register: FC = () => {
-  const onfinish = (values: any) => {
-    console.log(values)
+  const navigate = useNavigate()
+  const { run } = useRequest( async values => {
+      const { userName, password, nickName } = values
+      await userRegisterAPI(
+        userName,
+        password,
+        nickName
+      )
+    }
+    , {
+      manual: true,
+      onSuccess: () => {
+        message.success('注册成功')
+        navigate(LOGIN) // 注册成功跳转到登陆页面
+      },
+    })
+
+  const onfinish = (values: RegisterValues) => {
+    run(values)
   }
   return (
     <>
